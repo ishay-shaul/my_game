@@ -11,6 +11,7 @@ import danogl.gui.rendering.RectangleRenderable;
 import danogl.gui.rendering.Renderable;
 import danogl.util.Vector2;
 
+
 public class Main extends GameManager{
 
     private final String backroundString = "C:/Users/ishay/JAVA/google_game/pictures/backround/41524.jpg";
@@ -31,7 +32,8 @@ public class Main extends GameManager{
 
     }
 
-
+    void addAvatar(){
+    }
 
     public static void main(String[] args){
         new Main().run();

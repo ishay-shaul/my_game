@@ -3,7 +3,7 @@ import danogl.collisions.Collision;
 import danogl.gui.rendering.Renderable;
 import danogl.util.Vector2;
 
-public class avatar extends GameObject{
+public class Avatar extends GameObject{
     // each character has:
     // velocity, current whereabouts, image
     private final String run0 = "C://Users//ishay//JAVA//google_game//assets//assets//run_0.png/";
@@ -13,7 +13,7 @@ public class avatar extends GameObject{
     private final String run4 = "C://Users//ishay//JAVA//google_game//assets//assets//run_4.png/";
     private final String run5 = "C://Users//ishay//JAVA//google_game//assets//assets//run_5.png/";
 
-    public avatar(Vector2 topLeftCorner, Vector2 dimensions, Renderable renderable) {
+    public Avatar(Vector2 topLeftCorner, Vector2 dimensions, Renderable renderable) {
         super(topLeftCorner, dimensions, renderable);
     }
 
