@@ -30,10 +30,14 @@ public class Main extends GameManager{
         backround.setCoordinateSpace(CoordinateSpace.CAMERA_COORDINATES);
         gameObjects().addGameObject(backround, Layer.BACKGROUND);
 
+        Avatar avatar = Avatar.getInstance(imageReader);
+        gameObjects().addGameObject(avatar, Layer.FOREGROUND);
     }
 
-    void addAvatar(){
-    }
+//    public void addAvatar(){
+//        Avatar avatar = new Avatar.getInstance();
+//        gameObjects().addGameObject(avatar, Layer.FOREGROUND);
+//    }
 
     public static void main(String[] args){
         new Main().run();
