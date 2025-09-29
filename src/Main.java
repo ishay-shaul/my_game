@@ -30,10 +30,24 @@ public class Main extends GameManager{
         backround.setCoordinateSpace(CoordinateSpace.CAMERA_COORDINATES);
         gameObjects().addGameObject(backround, Layer.BACKGROUND);
 
+        Heart[] avatarLives = addHearts(imageReader);
         Avatar avatar = Avatar.getInstance(imageReader, inputListener);
+        avatar.addLives(avatarLives);
         gameObjects().addGameObject(avatar, Layer.FOREGROUND);
 
         gameObjects().addGameObject(new Ground(windowDimensions));
+    }
+
+    public Heart[] addHearts(ImageReader imageReader){
+        Heart[] avatarLives = Heart.initializeHearts(imageReader);
+        for(int i = 0; i < avatarLives.length; i++){
+            gameObjects().addGameObject(avatarLives[i], Layer.STATIC_OBJECTS);
+        }
+        return avatarLives;
+    }
+
+    public void removeObject(GameObject obj){
+        gameObjects().removeGameObject(obj);
     }
 
     public static void main(String[] args){

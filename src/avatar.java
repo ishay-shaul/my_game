@@ -38,6 +38,10 @@ public class Avatar extends GameObject{
 
     private static final Vector2 STARTING_PLACE = new Vector2(300, 600);
 
+    private final float GRAVITY = 500f;
+
+    private final float JUMP_STRENGTH = -400f;
+
     private static Avatar singleton;
 
     private static boolean IS_RUNNING = false;
@@ -56,11 +60,9 @@ public class Avatar extends GameObject{
 
     private float y;
 
-    private final float GRAVITY = 500f;
-
-    private final float JUMP_STRENGTH = -400f;
-
     private float velocity = 0;
+
+    private Heart[] lives;
 
     private Avatar(Vector2 topLeftCorner, Vector2 dimensions, Renderable renderable,
                    ImageReader imageReader, UserInputListener inputListener) {
@@ -146,6 +148,27 @@ public class Avatar extends GameObject{
         }
 
         comeDown(deltaTime);
+    }
+
+    public void addLives(Heart[] lives){
+        this.lives = lives;
+    }
+
+    public boolean removeLife(Main gameManager){
+        if(lives[0] == null){
+            return false;
+        }
+        else if(lives[2] != null){
+            gameManager.removeObject(lives[2]);
+            return true;
+        }
+        for(int i = 1; i >= 0; i-- ){
+            if(lives[i] != null){
+                gameManager.removeObject(lives[i]);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
