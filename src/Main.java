@@ -16,6 +16,12 @@ public class Main extends GameManager{
 
     private final String backroundString = "C:/Users/ishay/JAVA/google_game/pictures/backround/41524.jpg";
 
+    private ObstacleFactory factory;
+
+    private Avatar avatar;
+
+    private ImageReader imageReader;
+
     public Main() {
         super();
     }
@@ -28,14 +34,18 @@ public class Main extends GameManager{
         Vector2 windowDimensions = windowController.getWindowDimensions();
         GameObject backround = new GameObject(Vector2.ZERO, windowDimensions, gameBackroundImage);
         backround.setCoordinateSpace(CoordinateSpace.CAMERA_COORDINATES);
+        this.imageReader = imageReader;
         gameObjects().addGameObject(backround, Layer.BACKGROUND);
+
+        factory = new ObstacleFactory();
 
         Heart[] avatarLives = addHearts(imageReader);
         Avatar avatar = Avatar.getInstance(imageReader, inputListener);
         avatar.addLives(avatarLives);
         gameObjects().addGameObject(avatar, Layer.FOREGROUND);
 
-        gameObjects().addGameObject(new Ground(windowDimensions));
+        gameObjects().addGameObject(new Wall(windowDimensions.y()));
+//        gameObjects().addGameObject(new Ground(windowDimensions));
     }
 
     public Heart[] addHearts(ImageReader imageReader){
@@ -48,6 +58,23 @@ public class Main extends GameManager{
 
     public void removeObject(GameObject obj){
         gameObjects().removeGameObject(obj);
+    }
+
+    @Override
+    public void update(float deltaTime) {
+        super.update(deltaTime);
+        Obstacle addedObstacle = factory.getObstacle(avatar.getyGround(), imageReader, avatar, this);
+        if(addedObstacle != null){
+            gameObjects().addGameObject(addedObstacle);
+        }
+    }
+
+    private void addObstacles(Avatar avatar, ImageReader imageReader){
+
+    }
+
+    public Vector2 getWindowDimensions(){
+        return super.camera().windowDimensions();
     }
 
     public static void main(String[] args){

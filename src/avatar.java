@@ -171,6 +171,10 @@ public class Avatar extends GameObject{
         return false;
     }
 
+    public float getyGround(){
+        return yGround;
+    }
+
     @Override
     public void onCollisionEnter(GameObject other, Collision collision) {
         super.onCollisionEnter(other, collision);
