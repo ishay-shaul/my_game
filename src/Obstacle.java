@@ -21,22 +21,20 @@ public abstract class Obstacle extends GameObject {
         super(topLeftCorner, dimensions, renderable);
         this.avatar = avatar;
         this.gameManager = gameManager;
+        this.setTag("obstacle");
     }
 
     @Override
     public void onCollisionEnter(GameObject other, Collision collision) {
         super.onCollisionEnter(other, collision);
-        if(other == avatar){
-            avatar.removeLife(gameManager);
-        }
-        else if (other instanceof Wall){
+        if ("wall".equals(other.getTag())){
             gameManager.removeObject(this);
+            System.out.println("bird got out");
         }
-    }
-
-    @Override
-    public void update(float deltaTime) {
-        super.update(deltaTime);
+        else{
+            avatar.removeLife(gameManager);
+            System.out.println("bird hit avatar");
+        }
     }
 
     /**

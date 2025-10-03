@@ -10,10 +10,11 @@ public class Tree extends Obstacle{
     private final float SPEED = -200f;
 
 
-    public Tree(float groundHeight, ImageReader imageReader, Avatar avatar, Main gameManager) {
-        super(new Vector2(gameManager.getWindowDimensions().x(), groundHeight - DIMENSION.y()),
+    public Tree(float groundHeight, ImageReader imageReader, Avatar avatar, Main gameManager,
+                Vector2 windowDimensions) {
+        super(new Vector2(windowDimensions.x(), groundHeight - DIMENSION.y()),
                 DIMENSION,
-                imageReader.readImage(TREE_PATH, false),
+                imageReader.readImage(TREE_PATH, true),
                 avatar, gameManager);
         startMove();
     }

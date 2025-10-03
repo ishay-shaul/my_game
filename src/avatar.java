@@ -2,6 +2,7 @@ import danogl.GameManager;
 import danogl.GameObject;
 import danogl.collisions.Collision;
 import danogl.components.CoordinateSpace;
+import danogl.components.GameObjectPhysics;
 import danogl.gui.ImageReader;
 import danogl.gui.UserInputListener;
 import danogl.gui.rendering.AnimationRenderable;
@@ -78,7 +79,7 @@ public class Avatar extends GameObject{
 
     public static Avatar getInstance(ImageReader imageReader, UserInputListener inputListener){
         if(singleton == null){
-            singleton = new Avatar(STARTING_PLACE, DIMENSIONS, imageReader.readImage(idle0, false),
+            singleton = new Avatar(STARTING_PLACE, DIMENSIONS, imageReader.readImage(idle0, true),
                     imageReader, inputListener);
 
         }

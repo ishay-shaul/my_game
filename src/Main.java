@@ -11,6 +11,8 @@ import danogl.gui.rendering.RectangleRenderable;
 import danogl.gui.rendering.Renderable;
 import danogl.util.Vector2;
 
+import java.util.Random;
+
 
 public class Main extends GameManager{
 
@@ -23,6 +25,12 @@ public class Main extends GameManager{
     private ImageReader imageReader;
 
     private WindowController windowController;
+
+    private float timeSinceLastSpawn = 0f;
+
+    private final float SPAWN_TIME = 3f;
+
+    private static final int MAX_HEIGHT = 100;
 
     public Main() {
         super();
@@ -43,14 +51,13 @@ public class Main extends GameManager{
         factory = new ObstacleFactory();
 
         Heart[] avatarLives = addHearts(imageReader);
-        Avatar avatar = Avatar.getInstance(imageReader, inputListener);
+        this.avatar = Avatar.getInstance(imageReader, inputListener);
         avatar.addLives(avatarLives);
-        gameObjects().addGameObject(avatar, Layer.FOREGROUND);
-
-        gameObjects().addGameObject(new Wall(windowDimensions.y()));
-        Vector2 start = new Vector2(windowDimensions.x(), avatar.getyGround());
-        gameObjects().addGameObject(new Bird(start, imageReader, avatar, this));
-//        gameObjects().addGameObject(new Ground(windowDimensions));
+        gameObjects().addGameObject(avatar);
+        Wall wall = new Wall(windowDimensions.y());
+        gameObjects().addGameObject(wall);
+        avatar.setTag("avatar");
+        wall.setTag("wall");
     }
 
     public Heart[] addHearts(ImageReader imageReader){
@@ -68,18 +75,18 @@ public class Main extends GameManager{
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-//        if(Math.random() < 0.01){
-//            Obstacle addedObstacle = factory.getObstacle(avatar.getyGround(), imageReader, avatar, this);
+        timeSinceLastSpawn += deltaTime;
+        if(timeSinceLastSpawn >= SPAWN_TIME){
+            timeSinceLastSpawn = 0;
+            Bird bird = createBird();
+            gameObjects().addGameObject(bird, Layer.DEFAULT);
+            bird.setTag("bird");
+//            Obstacle addedObstacle = factory.getObstacle(avatar.getyGround(), imageReader, avatar,
+//                    this, windowController.getWindowDimensions());
 //            if(addedObstacle != null){
-//                gameObjects().addGameObject(addedObstacle);
+//                gameObjects().addGameObject(addedObstacle, Layer.FOREGROUND);
 //            }
-////            Tree tree = new Tree(avatar.getyGround(), imageReader, avatar, this);
-////            gameObjects().addGameObject(tree);
-//        }
-//        Obstacle addedObstacle = factory.getObstacle(avatar.getyGround(), imageReader, avatar, this);
-//        if(addedObstacle != null){
-//            gameObjects().addGameObject(addedObstacle);
-//        }
+        }
     }
 
     private void addObstacles(Avatar avatar, ImageReader imageReader){
@@ -92,5 +99,12 @@ public class Main extends GameManager{
 
     public static void main(String[] args){
         new Main().run();
+    }
+
+    private Bird createBird(){
+        Random random = new Random();
+        int newRand = random.nextInt(MAX_HEIGHT);
+        return new Bird(new Vector2(windowController.getWindowDimensions().x(), avatar.getyGround() - newRand),
+                imageReader, avatar, this);
     }
 }
