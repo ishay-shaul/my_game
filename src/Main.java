@@ -48,7 +48,8 @@ public class Main extends GameManager{
         gameObjects().addGameObject(avatar, Layer.FOREGROUND);
 
         gameObjects().addGameObject(new Wall(windowDimensions.y()));
-        gameObjects().addGameObject(new Tree(avatar.getyGround(), imageReader, avatar, this));
+        Vector2 start = new Vector2(windowDimensions.x(), avatar.getyGround());
+        gameObjects().addGameObject(new Bird(start, imageReader, avatar, this));
 //        gameObjects().addGameObject(new Ground(windowDimensions));
     }
 
@@ -67,13 +68,13 @@ public class Main extends GameManager{
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-//        if(Math.random() < 0.005){
-////            Obstacle addedObstacle = factory.getObstacle(avatar.getyGround(), imageReader, avatar, this);
-////            if(addedObstacle != null){
-////                gameObjects().addGameObject(addedObstacle);
-////            }
-//            Tree tree = new Tree(avatar.getyGround(), imageReader, avatar, this);
-//            gameObjects().addGameObject(tree);
+//        if(Math.random() < 0.01){
+//            Obstacle addedObstacle = factory.getObstacle(avatar.getyGround(), imageReader, avatar, this);
+//            if(addedObstacle != null){
+//                gameObjects().addGameObject(addedObstacle);
+//            }
+////            Tree tree = new Tree(avatar.getyGround(), imageReader, avatar, this);
+////            gameObjects().addGameObject(tree);
 //        }
 //        Obstacle addedObstacle = factory.getObstacle(avatar.getyGround(), imageReader, avatar, this);
 //        if(addedObstacle != null){

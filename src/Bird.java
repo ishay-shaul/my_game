@@ -17,7 +17,7 @@ public class Bird extends Obstacle {
 
     private static final float TIME_BETWEEN_CLIPS = 0.1f;
 
-    private static final float SPEED = -5f;
+    private static final float SPEED = -200f;
 
     public Bird(Vector2 topLeftCorner, ImageReader imageReader, Avatar avatar, Main gameManager) {
         super(topLeftCorner, DIMENSION,
