@@ -22,6 +22,8 @@ public class Main extends GameManager{
 
     private ImageReader imageReader;
 
+    private WindowController windowController;
+
     public Main() {
         super();
     }
@@ -30,6 +32,7 @@ public class Main extends GameManager{
     public void initializeGame(ImageReader imageReader, SoundReader soundReader, UserInputListener inputListener, WindowController windowController) {
         super.initializeGame(imageReader, soundReader, inputListener, windowController);
         Renderable gameBackroundImage = imageReader.readImage(backroundString, false);
+        this.windowController = windowController;
 
         Vector2 windowDimensions = windowController.getWindowDimensions();
         GameObject backround = new GameObject(Vector2.ZERO, windowDimensions, gameBackroundImage);
@@ -45,6 +48,7 @@ public class Main extends GameManager{
         gameObjects().addGameObject(avatar, Layer.FOREGROUND);
 
         gameObjects().addGameObject(new Wall(windowDimensions.y()));
+        gameObjects().addGameObject(new Tree(avatar.getyGround(), imageReader, avatar, this));
 //        gameObjects().addGameObject(new Ground(windowDimensions));
     }
 
@@ -63,10 +67,18 @@ public class Main extends GameManager{
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-        Obstacle addedObstacle = factory.getObstacle(avatar.getyGround(), imageReader, avatar, this);
-        if(addedObstacle != null){
-            gameObjects().addGameObject(addedObstacle);
-        }
+//        if(Math.random() < 0.005){
+////            Obstacle addedObstacle = factory.getObstacle(avatar.getyGround(), imageReader, avatar, this);
+////            if(addedObstacle != null){
+////                gameObjects().addGameObject(addedObstacle);
+////            }
+//            Tree tree = new Tree(avatar.getyGround(), imageReader, avatar, this);
+//            gameObjects().addGameObject(tree);
+//        }
+//        Obstacle addedObstacle = factory.getObstacle(avatar.getyGround(), imageReader, avatar, this);
+//        if(addedObstacle != null){
+//            gameObjects().addGameObject(addedObstacle);
+//        }
     }
 
     private void addObstacles(Avatar avatar, ImageReader imageReader){
@@ -74,7 +86,7 @@ public class Main extends GameManager{
     }
 
     public Vector2 getWindowDimensions(){
-        return super.camera().windowDimensions();
+        return windowController.getWindowDimensions();
     }
 
     public static void main(String[] args){

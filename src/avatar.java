@@ -172,7 +172,7 @@ public class Avatar extends GameObject{
     }
 
     public float getyGround(){
-        return yGround;
+        return yGround + DIMENSIONS.y();
     }
 
     @Override

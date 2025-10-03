@@ -29,6 +29,14 @@ public abstract class Obstacle extends GameObject {
         if(other == avatar){
             avatar.removeLife(gameManager);
         }
+        else if (other instanceof Wall){
+            gameManager.removeObject(this);
+        }
+    }
+
+    @Override
+    public void update(float deltaTime) {
+        super.update(deltaTime);
     }
 
     /**
