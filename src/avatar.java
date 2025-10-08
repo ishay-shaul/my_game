@@ -10,6 +10,8 @@ import danogl.gui.rendering.Renderable;
 import danogl.util.Vector2;
 
 import java.awt.event.KeyEvent;
+import java.util.HashSet;
+import java.util.LinkedList;
 
 // will be singleton
 
@@ -63,7 +65,7 @@ public class Avatar extends GameObject{
 
     private float velocity = 0;
 
-    private Heart[] lives;
+    private LinkedList<Heart> lives;
 
     private Avatar(Vector2 topLeftCorner, Vector2 dimensions, Renderable renderable,
                    ImageReader imageReader, UserInputListener inputListener) {
@@ -151,25 +153,19 @@ public class Avatar extends GameObject{
         comeDown(deltaTime);
     }
 
-    public void addLives(Heart[] lives){
+    public void addLives(LinkedList<Heart> lives){
         this.lives = lives;
     }
 
     public boolean removeLife(Main gameManager){
-        if(lives[0] == null){
+        if(lives.isEmpty()){
             return false;
         }
-        else if(lives[2] != null){
-            gameManager.removeObject(lives[2]);
+        else{
+            gameManager.removeObject(lives.getLast());
+            lives.remove(lives.getLast());
             return true;
         }
-        for(int i = 1; i >= 0; i-- ){
-            if(lives[i] != null){
-                gameManager.removeObject(lives[i]);
-                return true;
-            }
-        }
-        return false;
     }
 
     public float getyGround(){

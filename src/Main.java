@@ -11,12 +11,15 @@ import danogl.gui.rendering.RectangleRenderable;
 import danogl.gui.rendering.Renderable;
 import danogl.util.Vector2;
 
+import java.util.LinkedList;
 import java.util.Random;
 
 
 public class Main extends GameManager{
 
     private final String backroundString = "C:/Users/ishay/JAVA/google_game/pictures/backround/41524.jpg";
+
+    private static final int NUM_LIVES = 3;
 
     private ObstacleFactory factory;
 
@@ -50,7 +53,7 @@ public class Main extends GameManager{
 
         factory = new ObstacleFactory();
 
-        Heart[] avatarLives = addHearts(imageReader);
+        LinkedList<Heart> avatarLives = addHearts(imageReader);// put this inside the avatar class
         this.avatar = Avatar.getInstance(imageReader, inputListener);
         avatar.addLives(avatarLives);
         gameObjects().addGameObject(avatar);
@@ -60,10 +63,10 @@ public class Main extends GameManager{
         wall.setTag("wall");
     }
 
-    public Heart[] addHearts(ImageReader imageReader){
-        Heart[] avatarLives = Heart.initializeHearts(imageReader);
-        for(int i = 0; i < avatarLives.length; i++){
-            gameObjects().addGameObject(avatarLives[i], Layer.STATIC_OBJECTS);
+    public LinkedList<Heart> addHearts(ImageReader imageReader){
+        LinkedList<Heart> avatarLives = Heart.initializeHearts(imageReader, NUM_LIVES);
+        for(Heart curHeart: avatarLives){
+            gameObjects().addGameObject(curHeart, Layer.STATIC_OBJECTS);
         }
         return avatarLives;
     }
@@ -81,11 +84,6 @@ public class Main extends GameManager{
             Bird bird = createBird();
             gameObjects().addGameObject(bird, Layer.DEFAULT);
             bird.setTag("bird");
-//            Obstacle addedObstacle = factory.getObstacle(avatar.getyGround(), imageReader, avatar,
-//                    this, windowController.getWindowDimensions());
-//            if(addedObstacle != null){
-//                gameObjects().addGameObject(addedObstacle, Layer.FOREGROUND);
-//            }
         }
     }
 
@@ -95,6 +93,10 @@ public class Main extends GameManager{
 
     public Vector2 getWindowDimensions(){
         return windowController.getWindowDimensions();
+    }
+
+    public void endGame(){
+        windowController.closeWindow();
     }
 
     public static void main(String[] args){

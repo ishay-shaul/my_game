@@ -32,7 +32,10 @@ public abstract class Obstacle extends GameObject {
             System.out.println("bird got out");
         }
         else{
-            avatar.removeLife(gameManager);
+            boolean isAlive = avatar.removeLife(gameManager);
+            if(!isAlive){
+                gameManager.endGame();
+            }
             System.out.println("bird hit avatar");
         }
     }
