@@ -45,6 +45,8 @@ public class Avatar extends GameObject{
 
     private final float JUMP_STRENGTH = -400f;
 
+    private static final int NUM_LIVES = 3;
+
     private static Avatar singleton;
 
     private static boolean IS_RUNNING = false;
@@ -153,20 +155,20 @@ public class Avatar extends GameObject{
         comeDown(deltaTime);
     }
 
-    public void addLives(LinkedList<Heart> lives){
-        this.lives = lives;
-    }
-
-    public boolean removeLife(Main gameManager){
-        if(lives.isEmpty()){
-            return false;
-        }
-        else{
-            gameManager.removeObject(lives.getLast());
-            lives.remove(lives.getLast());
-            return true;
-        }
-    }
+//    public void addLives(LinkedList<Heart> lives){
+//        this.lives = lives;
+//    }
+//
+//    public boolean removeLife(Main gameManager){
+//        if(lives.isEmpty()){
+//            return false;
+//        }
+//        else{
+//            gameManager.removeObject(lives.getLast());
+//            lives.remove(lives.getLast());
+//            return true;
+//        }
+//    }
 
     public float getyGround(){
         return yGround + DIMENSIONS.y();

@@ -35,6 +35,8 @@ public class Main extends GameManager{
 
     private static final int MAX_HEIGHT = 100;
 
+    private LinkedList<Heart> lives;
+
     public Main() {
         super();
     }
@@ -53,9 +55,9 @@ public class Main extends GameManager{
 
         factory = new ObstacleFactory();
 
-        LinkedList<Heart> avatarLives = addHearts(imageReader);// put this inside the avatar class
+        addHearts(imageReader);// put this inside the avatar class
         this.avatar = Avatar.getInstance(imageReader, inputListener);
-        avatar.addLives(avatarLives);
+//        avatar.addLives(avatarLives);
         gameObjects().addGameObject(avatar);
         Wall wall = new Wall(windowDimensions.y());
         gameObjects().addGameObject(wall);
@@ -63,12 +65,23 @@ public class Main extends GameManager{
         wall.setTag("wall");
     }
 
-    public LinkedList<Heart> addHearts(ImageReader imageReader){
+    public void addHearts(ImageReader imageReader){
         LinkedList<Heart> avatarLives = Heart.initializeHearts(imageReader, NUM_LIVES);
         for(Heart curHeart: avatarLives){
             gameObjects().addGameObject(curHeart, Layer.STATIC_OBJECTS);
         }
-        return avatarLives;
+        lives = avatarLives;
+    }
+
+    public boolean removeLife(){
+        if(lives.isEmpty()){
+            return false;
+        }
+        else{
+            gameObjects().removeGameObject(lives.getLast(), Layer.STATIC_OBJECTS);
+            lives.remove(lives.getLast());
+            return true;
+        }
     }
 
     public void removeObject(GameObject obj){
