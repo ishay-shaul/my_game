@@ -41,9 +41,9 @@ public class Avatar extends GameObject{
 
     private static final Vector2 STARTING_PLACE = new Vector2(300, 600);
 
-    private final float GRAVITY = 500f;
+    private final float GRAVITY = 400f;
 
-    private final float JUMP_STRENGTH = -400f;
+    private final float JUMP_STRENGTH = -500f;
 
     private static final int NUM_LIVES = 3;
 

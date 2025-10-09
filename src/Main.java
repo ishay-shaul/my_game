@@ -19,7 +19,15 @@ public class Main extends GameManager{
 
     private final String backroundString = "C:/Users/ishay/JAVA/google_game/pictures/backround/41524.jpg";
 
+    private static final String GAME_OVER_PATH = "C:/Users/ishay/JAVA/google_game/pictures/2143848.jpg";
+
     private static final int NUM_LIVES = 3;
+
+    private static final float GAME_OVER_TLC = 0.25f;
+
+    private static final float GAME_OVER_DIM = 0.5f;
+
+    private static final int ONE_SECOND_FRAME = 1000;
 
     private ObstacleFactory factory;
 
@@ -94,14 +102,21 @@ public class Main extends GameManager{
         timeSinceLastSpawn += deltaTime;
         if(timeSinceLastSpawn >= SPAWN_TIME){
             timeSinceLastSpawn = 0;
+//            Bird bird = createBird();
+//            gameObjects().addGameObject(bird, Layer.DEFAULT);
+//            bird.setTag("bird");
+            addObstacles();
+        }
+    }
+
+    private void addObstacles(){
+        Random random = new Random();
+        int pick = random.nextInt(2);
+        if(pick == 1){
             Bird bird = createBird();
             gameObjects().addGameObject(bird, Layer.DEFAULT);
             bird.setTag("bird");
         }
-    }
-
-    private void addObstacles(Avatar avatar, ImageReader imageReader){
-
     }
 
     public Vector2 getWindowDimensions(){
@@ -109,7 +124,17 @@ public class Main extends GameManager{
     }
 
     public void endGame(){
-        windowController.closeWindow();
+        Vector2 gameOverDimensions = getWindowDimensions().mult(GAME_OVER_DIM);
+        Vector2 tLC = getWindowDimensions().mult(GAME_OVER_TLC);
+        Renderable image = imageReader.readImage(GAME_OVER_PATH, true);
+        GameObject gameOver = new GameObject(tLC, gameOverDimensions, image);
+        gameObjects().addGameObject(gameOver, Layer.FOREGROUND);
+        new java.util.Timer().schedule(new java.util.TimerTask() {
+            @Override
+            public void run() {
+                windowController.closeWindow();
+            }
+        }, ONE_SECOND_FRAME);
     }
 
     public static void main(String[] args){
