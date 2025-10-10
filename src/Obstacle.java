@@ -3,8 +3,14 @@ import danogl.collisions.Collision;
 import danogl.gui.rendering.Renderable;
 import danogl.util.Vector2;
 
+/**
+ * An abstract class which unites all the obstacles in the game. In this specific game, there will only be one type
+ * of obstacle, the bird, but more can be added to the game.
+ * @see Main
+ * @author Ishay Shaul
+ */
 public abstract class Obstacle extends GameObject {
-    private final Avatar avatar;
+    /** The game manager which permits the addition of teh obstacle to the game*/
     private final Main gameManager;
 
     /**
@@ -17,26 +23,32 @@ public abstract class Obstacle extends GameObject {
      *                      the GameObject will not be rendered.
      */
     public Obstacle(Vector2 topLeftCorner, Vector2 dimensions, Renderable renderable,
-                    Avatar avatar, Main gameManager) {
+                    Main gameManager) {
         super(topLeftCorner, dimensions, renderable);
-        this.avatar = avatar;
         this.gameManager = gameManager;
         this.setTag("obstacle");
     }
 
+    /**
+     * when an obstacle collides with another object, it will leave the game and update the lives of the avatar
+     * if need be.
+     * @param other The GameObject with which a collision occurred.
+     * @param collision Information regarding this collision.
+     *                  A reasonable elastic behavior can be achieved with:
+     *                  setVelocity(getVelocity().flipped(collision.getNormal()));
+     */
     @Override
     public void onCollisionEnter(GameObject other, Collision collision) {
         super.onCollisionEnter(other, collision);
         if ("wall".equals(other.getTag())){
             gameManager.removeObject(this);
-            System.out.println("bird got out");
         }
         else{
+            gameManager.removeObject(this);
             boolean isAlive = gameManager.removeLife();
             if(!isAlive){
                 gameManager.endGame();
             }
-            System.out.println("bird hit avatar");
         }
     }
 
